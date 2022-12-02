@@ -58,9 +58,10 @@ export default function App() {
     // Make a post request
     await fetch('https://barbosarepresenta.com.br/wp-json/api/v1/mo-jwt', {
       method: 'POST',
+      // Solve CORS problem
+      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
-        "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
         username: process.env.REACT_APP_LOGIN_USER_USERNAME,
@@ -78,7 +79,7 @@ export default function App() {
       });
 
     setGenerateText("Gerar Link Novamente");
-    setOpen(true);
+    if(tokenInfos.code && tokenInfos.code === 200) setOpen(true);
   };
 
   const handleClose = () => {

@@ -58,8 +58,6 @@ export default function App() {
     // Make a post request
     await fetch('https://barbosarepresenta.com.br/wp-json/api/v1/mo-jwt', {
       method: 'POST',
-      // Solve CORS problem
-      mode: 'cors',
       headers: {
         'Content-Type': 'application/json',
       },

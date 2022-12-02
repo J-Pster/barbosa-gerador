@@ -15,6 +15,8 @@ import { BootstrapDialog, BootstrapDialogTitle } from './components/Popup'
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 
+import axios from 'axios';
+
 interface TokenInfo {
   token_type: string,
   iat: number,
@@ -56,20 +58,15 @@ export default function App() {
     setGenerateText("Gerando...");
 
     // Make a post request
-    await fetch('https://barbosarepresenta.com.br/wp-json/api/v1/mo-jwt', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: process.env.REACT_APP_LOGIN_USER_USERNAME,
-        password: process.env.REACT_APP_LOGIN_USER_PASSWORD,
-      }),
+    await axios.post('https://cors-anywhere.herokuapp.com/https://barbosarepresenta.com.br/wp-json/api/v1/mo-jwt', {
+      username: process.env.REACT_APP_LOGIN_USER_USERNAME,
+      password: process.env.REACT_APP_LOGIN_USER_PASSWORD,
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if(data.code !== 200) return alert("Erro ao gerar token!");
-        setTokenInfos(data);
+      .then((response) => {
+        if(response.status !== 200) return alert("Erro ao gerar token!");
+        setTokenInfos(response.data);
+        console.log(response.data);
+        setOpen(true);
       })
       .catch((error) => {
         alert("Erro ao gerar token!");
@@ -188,7 +185,7 @@ export default function App() {
             <b>Token:</b> {tokenInfos.jwt_token}
           </Typography>
           <Typography gutterBottom>
-            <b>Expira Em:</b> {new Date(tokenInfos.expires_in * 1000).getMinutes()} minutos
+            <b>Expira Em:</b> 60 minutos
           </Typography>
         </DialogContent>
         <DialogActions>

@@ -58,7 +58,7 @@ export default function App() {
     setGenerateText("Gerando...");
 
     // Make a post request
-    await axios.post('https://cors-anywhere.herokuapp.com/https://barbosarepresenta.com.br/wp-json/api/v1/mo-jwt', {
+    await axios.post('https://barbosarepresenta.com.br/wp-json/api/v1/mo-jwt', {
       username: process.env.REACT_APP_LOGIN_USER_USERNAME,
       password: process.env.REACT_APP_LOGIN_USER_PASSWORD,
     })
